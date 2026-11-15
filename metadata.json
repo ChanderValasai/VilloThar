@@ -1,0 +1,6 @@
+{
+  "name": "VilloThar",
+  "description": "Community-owned affordable internet connectivity for rural villages in Tharparkar, Sindh — public website, customer portal, captive portal, and NOC management system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

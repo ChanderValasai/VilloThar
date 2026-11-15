@@ -1,0 +1,1293 @@
+# MASTER PROMPT: VILLOTHAR — OFFICIAL WEBSITE, CUSTOMER PORTAL & NETWORK MANAGEMENT SYSTEM
+
+## 1. Project Overview
+
+Act as a senior full-stack software engineer, UI/UX designer, product architect, and network systems designer.
+
+Build a modern, responsive, professional web platform for **VilloThar**, a village-owned internet service initiative designed to provide affordable internet connectivity to rural communities in Tharparkar, Sindh, Pakistan.
+
+VilloThar is not just an ordinary internet service provider website. It needs a complete digital platform through which:
+
+- People can learn about VilloThar and its services.
+- Customers can register and verify their identity.
+- Customers can register individual devices.
+- Customers can purchase internet packages for their registered devices.
+- Devices can be associated with their MAC addresses.
+- The system can manage package validity and network authorization.
+- Customers can manage their accounts, devices, subscriptions, payments, and support requests.
+- Administrators can manage customers, devices, packages, payments, network sessions, and network operations.
+
+The platform should be designed as a real-world product that can eventually be connected to physical networking equipment, payment services, and authorized identity-verification services.
+
+Do not build only a visual mockup. Build a functional, well-structured application with realistic workflows and a backend-ready architecture.
+
+---
+
+## 2. Important Business and Network Model
+
+Understand this model before designing the application.
+
+### Network infrastructure
+
+- Mithi will host the Network Operations Centre (NOC) and main network hub.
+- Pabohar is the first pilot village.
+- The pilot village is approximately 12 km from the Mithi NOC.
+- Village-level networking equipment and Wi-Fi routers/access points will provide the VilloThar Wi-Fi network.
+- Customers should be able to connect through VilloThar routers within the supported village coverage area.
+
+**Important:** Mithi is the NOC location, not a currently confirmed customer coverage village. Pabohar is the first pilot coverage village. Do not display other villages as active coverage areas unless they are explicitly added by an administrator.
+
+### Customer access model
+
+The system must use a captive portal-based internet access process.
+
+The expected customer journey is:
+
+1. A person opens the Wi-Fi settings on their phone or computer.
+2. They select the VilloThar Wi-Fi network (SSID).
+3. The network redirects them to the VilloThar captive portal.
+4. A new customer registers an account.
+5. The customer provides the required personal and CNIC information.
+6. The system checks the customer's identity-verification status.
+7. The customer registers their device.
+8. The device's MAC address is associated with the customer account and device record through the network integration.
+9. The customer selects an internet package for that device.
+10. The customer completes payment through the configured payment method.
+11. The backend verifies the payment.
+12. The network authorization system activates internet access for that device.
+13. The device receives the package's permitted internet access for its validity period.
+14. When the package expires, access is suspended until a new package is purchased and activated.
+
+### Critical device and package rules
+
+- Each registered device requires its own separate package.
+- One package must not automatically provide internet access to multiple devices.
+- If a customer wants internet on two devices, they must register both devices and purchase a separate package for each.
+- Every package provides a speed of **2 Mbps**.
+- A registered device must be associated with its MAC address.
+- The customer should be able to use their valid package through any supported VilloThar router in the village, subject to network configuration.
+- The package must remain associated with the registered device, not with a particular Wi-Fi router.
+- Do not introduce a family package or shared-device package into the initial launch offering.
+
+Design the system around this relationship:
+
+**Verified Customer → Registered Device → MAC Address → Purchased Package → Verified Payment → Network Authorization**
+
+---
+
+## 3. Internet Packages and Pricing
+
+Display the following packages on the public website and inside the customer portal.
+
+| Package | Price | Speed | Validity |
+|---|---:|---|---|
+| Daily | Rs 50 | 2 Mbps | 1 day |
+| Weekly | Rs 200 | 2 Mbps | 7 days |
+| Biweekly | Rs 350 | 2 Mbps | 14 days |
+| Monthly | Rs 600 | 2 Mbps | 30 days |
+
+Important pricing conditions:
+
+- These prices are indicative and will be finalized after the pilot.
+- Applicable taxes may be added.
+- All packages have the same 2 Mbps speed.
+- The main difference between packages is their validity period and price.
+- Do not invent additional speeds, packages, discounts, or prices.
+- Administrators should be able to update package information through the admin dashboard.
+
+Create attractive package cards with clear pricing, speed, validity, and a purchase action.
+
+---
+
+# PART A — PUBLIC VILLOTHAR WEBSITE
+
+## 4. Home Page
+
+Create a welcoming, modern landing page that communicates VilloThar's purpose immediately.
+
+### Hero section
+
+Suggested headline:
+
+**Connecting Thar. Empowering Communities.**
+
+Suggested supporting text:
+
+"Bringing reliable and affordable internet connectivity to the villages of Tharparkar through a community-focused network."
+
+Include:
+
+- Primary CTA: Explore Internet Packages
+- Secondary CTA: How It Works
+- A visually engaging hero image representing Tharparkar, its villages, people, and digital connectivity.
+- A subtle visual element representing internet connectivity across a village.
+
+Avoid generic technology stock imagery. The visual identity should reflect the local context.
+
+### Other home page sections
+
+1. About VilloThar — short introduction.
+2. Why VilloThar — affordability, community ownership, digital inclusion.
+3. How It Works — simple explanation of the service.
+4. Internet Packages — current package cards.
+5. Coverage — show Pabohar as the first pilot village.
+6. Our Network — explain the village Wi-Fi and Mithi NOC model.
+7. Community Impact — education, communication, digital opportunities, and access to information.
+8. FAQ — answer common customer questions.
+9. Contact and Support — contact information should be editable through the admin dashboard.
+10. Footer — navigation, policies, and relevant information.
+
+Do not invent impact statistics, customer counts, coverage claims, or operational achievements.
+
+## 5. About Page
+
+Explain:
+
+- What VilloThar is.
+- Why affordable internet access matters in rural Tharparkar.
+- The community-oriented approach.
+- The village-owned network concept.
+- The long-term vision of connecting more underserved communities.
+
+Use clear, simple, human language rather than corporate jargon.
+
+## 6. Packages Page
+
+Create a dedicated pricing page.
+
+Include all four packages and their details.
+
+Clearly explain:
+
+- Every package offers 2 Mbps.
+- Each device needs its own package.
+- Package validity starts according to the confirmed activation time and backend rules.
+- Applicable taxes may apply.
+- Prices are indicative pending pilot confirmation.
+
+Add a "Buy Package" CTA that directs visitors to registration/login and the device-selection process.
+
+## 7. Coverage Page
+
+Create a coverage page showing:
+
+- Pabohar — First Pilot Village.
+- Mithi — Network Operations Centre (NOC).
+
+Clearly distinguish between the NOC and customer coverage.
+
+Use a map-style visual if possible, but do not fabricate exact tower coordinates, network routes, signal strength, or coverage boundaries.
+
+Future villages should be manageable through the admin dashboard and should not automatically appear as active coverage.
+
+## 8. How It Works Page
+
+Explain the process visually:
+
+Connect to VilloThar Wi-Fi → Open Captive Portal → Register → Verify Identity → Register Device → Choose Package → Pay → Get Connected.
+
+Include a simple explanation of:
+
+- Individual customer registration.
+- Device registration.
+- MAC-address association.
+- Separate package requirement for each device.
+- Package expiry and renewal.
+
+## 9. Contact and Support Page
+
+Include:
+
+- Contact information (editable).
+- Support request form.
+- Frequently asked questions.
+- Complaint submission.
+- Customer support process.
+
+Do not invent finalized phone numbers, email addresses, or social media accounts. Use clearly marked editable placeholders if confirmed details are unavailable.
+
+---
+
+# PART B — CUSTOMER PORTAL
+
+## 10. Customer Registration and Login
+
+Create a secure customer authentication system.
+
+### Registration fields
+
+- Full Name
+- CNIC Number
+- Mobile Number
+- Village
+- Password
+- Confirm Password
+- Consent to identity verification and relevant data processing.
+
+The CNIC number must be validated for the expected format before submission.
+
+Do not collect unnecessary personal information.
+
+### Login
+
+Customers should be able to log in using an appropriate combination of mobile number and password.
+
+Include:
+
+- Forgot password.
+- Password reset.
+- Logout.
+- Session management.
+- Account status.
+
+### Customer account dashboard
+
+After login, display:
+
+- Customer name.
+- CNIC verification status.
+- Registered devices.
+- Active packages.
+- Package expiry information.
+- Payment history.
+- Pending payments.
+- Support tickets.
+- Account settings.
+
+Keep the dashboard simple and mobile-friendly.
+
+---
+
+## 11. CNIC and NADRA Identity Verification
+
+Identity verification is an important part of the planned customer onboarding process.
+
+The system should be architected to support verification through an **officially authorized NADRA verification channel or approved service provider**, subject to VilloThar obtaining the required authorization, access, and agreements.
+
+### Required customer information
+
+Store:
+
+- Customer full name.
+- CNIC number.
+- Mobile number.
+- Village.
+- Identity verification status.
+- Verification timestamp.
+- Verification provider reference.
+- Customer consent record and timestamp.
+
+### Verification statuses
+
+Support these states:
+
+- Not Submitted
+- Pending Verification
+- Verified
+- Verification Failed
+- Requires Manual Review
+
+### Verification workflow
+
+1. Customer submits their CNIC information.
+2. Backend validates the input format.
+3. Backend sends the verification request through the officially authorized integration when available.
+4. The verification provider returns a result.
+5. Backend records the result and verification reference.
+6. Customer sees the updated verification status.
+7. If verification fails or requires review, provide an appropriate message and support process.
+
+### Important NADRA integration rules
+
+- Do not assume that public or unauthorized access to NADRA databases is available.
+- Do not scrape NADRA websites or databases.
+- Do not create a fake NADRA API.
+- Do not show a successful verification result unless an authorized verification response has actually been received.
+- If official access is not yet available, build a clearly labelled verification integration placeholder or sandbox mode.
+- Keep provider credentials and API secrets on the backend, never in frontend code.
+- Make the verification provider configurable so the integration can be added later without redesigning the entire application.
+
+### CNIC privacy and security
+
+CNIC information is sensitive personal data.
+
+Implement:
+
+- Encryption at rest.
+- HTTPS and encryption in transit.
+- Role-based access control.
+- Masked CNIC display in normal customer and admin screens.
+- Restricted access to full CNIC information.
+- Audit logs for sensitive data access and changes.
+- Data minimization and appropriate retention policies.
+- Secure handling of verification references and provider responses.
+
+Do not expose full CNIC numbers in URLs, logs, frontend source code, or public API responses.
+
+---
+
+## 12. Device Registration and Management
+
+This is one of the most important modules of the platform.
+
+A customer can register multiple devices, but each device must have its own package.
+
+### Device registration form
+
+Include:
+
+- Device Name (e.g. My Android Phone, Laptop, Office Computer).
+- Device Type (Mobile, Laptop, Tablet, Other).
+- MAC Address.
+- Device Registration Date.
+- Device Status.
+
+The device record must also include or securely link to:
+
+- Customer/User ID.
+- CNIC reference or securely linked CNIC information.
+- CNIC verification status.
+- Verification provider reference where applicable.
+- Associated subscription.
+- Package status.
+- Network authorization status.
+- Last connection time.
+
+### MAC address management
+
+The MAC address is required for network-side device identification and authorization.
+
+Important technical limitation:
+
+A normal browser cannot reliably read a device's Wi-Fi MAC address. Do not pretend that frontend JavaScript can automatically retrieve it.
+
+Design the application so that MAC identification and association can be handled through the captive portal gateway, router/controller, RADIUS server, or another compatible network integration.
+
+Support:
+
+- MAC address validation.
+- MAC address association with a registered device.
+- Duplicate MAC detection.
+- Device registration status.
+- Device authorization status.
+- Device suspension.
+- Device removal or replacement through an approved process.
+- Audit history for MAC changes.
+
+Consider that modern phones may use private or randomized MAC addresses. The onboarding process should explain that the customer may need to use the same device-specific Wi-Fi identity for reliable authorization.
+
+MAC addresses can be spoofed. Do not treat MAC matching as the only security mechanism. Combine network authorization with account, subscription, payment, and device status checks.
+
+### Device dashboard
+
+Display:
+
+- Device name.
+- Device type.
+- Masked or displayed MAC address according to permissions.
+- Associated package.
+- Package expiry.
+- Authorization status.
+- Last connection.
+- Device management actions.
+
+---
+
+## 13. Package Purchase and Subscription Management
+
+Customers should be able to purchase a package for a specific registered device.
+
+### Purchase flow
+
+1. Customer logs in.
+2. Customer selects one of their registered devices.
+3. System checks whether the device is eligible.
+4. Customer selects a package.
+5. System displays the package price, validity, and 2 Mbps speed.
+6. Customer selects an available payment method.
+7. Payment is initiated.
+8. Backend receives and verifies the payment result.
+9. Subscription is created or activated according to the confirmed payment.
+10. Network authorization is requested for the registered device.
+
+### Subscription information
+
+Store:
+
+- Subscription ID.
+- Customer ID.
+- Device ID.
+- Package ID.
+- Payment ID.
+- Purchase date.
+- Activation date.
+- Expiry date.
+- Subscription status.
+- Network authorization status.
+
+### Subscription statuses
+
+- Pending Payment
+- Payment Failed
+- Pending Activation
+- Active
+- Expired
+- Suspended
+- Cancelled
+
+### Customer actions
+
+- View active package.
+- View expiry date and remaining validity.
+- Renew a package.
+- View previous subscriptions.
+- View payment receipts.
+
+A renewal should be linked to the correct registered device.
+
+Do not allow one device's subscription to activate another device.
+
+---
+
+## 14. Payment Management
+
+Create a payment module that can support payment integration in the future.
+
+Payment methods should be configurable by administrators.
+
+Do not assume a particular payment gateway is already selected.
+
+### Payment information
+
+Store:
+
+- Payment ID.
+- Customer ID.
+- Device ID.
+- Subscription ID.
+- Package ID.
+- Amount.
+- Payment method.
+- Transaction reference.
+- Payment timestamp.
+- Payment status.
+
+### Payment statuses
+
+- Pending
+- Successful
+- Failed
+- Refunded
+- Requires Review
+
+### Important payment rules
+
+- Never activate a package based only on a frontend success message.
+- Payment confirmation must be validated by the backend.
+- Use payment gateway callbacks/webhooks or a verified provider response.
+- Prevent duplicate payment processing.
+- Maintain transaction records and audit logs.
+- Provide a clear pending-payment state when confirmation is not yet received.
+
+If no payment provider is configured, implement a clearly labelled test payment mode. Never present test payments as real transactions.
+
+---
+
+# PART C — CAPTIVE PORTAL
+
+## 15. Captive Portal Experience
+
+Create a dedicated captive portal interface optimized for mobile phones.
+
+This is the interface customers will see when connecting to the VilloThar Wi-Fi network.
+
+It should be lightweight, fast-loading, simple, and easy to understand.
+
+### Screen 1: Welcome
+
+Display:
+
+- VilloThar logo.
+- Welcome message.
+- Short explanation of internet access.
+- Login button.
+- New Customer Registration button.
+
+### Screen 2: Registration
+
+Collect the required customer details, including CNIC and mobile number.
+
+Show the verification status clearly.
+
+### Screen 3: Identity Verification
+
+Show:
+
+- Verification in progress.
+- Verification successful.
+- Verification unsuccessful.
+- Manual review required.
+
+Do not show successful verification without a real authorized provider response.
+
+### Screen 4: Device Registration
+
+Display the device registration process.
+
+Explain how the MAC address is associated with the registered device through the network integration.
+
+If the gateway provides the MAC address, use the trusted backend/gateway data rather than pretending the browser can retrieve it.
+
+### Screen 5: Package Selection
+
+Display the four available packages.
+
+Make it clear that the selected package applies to the selected device only.
+
+### Screen 6: Payment
+
+Show:
+
+- Selected device.
+- Selected package.
+- Total amount.
+- Payment method.
+- Payment status.
+
+### Screen 7: Activation
+
+Display appropriate states:
+
+- Payment confirmed.
+- Activation pending.
+- Device authorized.
+- Internet access active.
+
+Only show internet access as active after the backend and network authorization system confirm it.
+
+### Screen 8: Returning Customer
+
+For a returning customer:
+
+- Recognize the device through the network integration.
+- Check its associated account and subscription.
+- Display the current package and expiry.
+- Allow renewal if expired or nearing expiry.
+- Show a support option if access fails.
+
+### Expired package screen
+
+Explain that the package has expired and provide a renewal action.
+
+### Captive portal design requirements
+
+- Mobile-first layout.
+- Fast loading on limited connectivity.
+- Minimal images and scripts.
+- Clear buttons and readable typography.
+- Simple English, with architecture that can support Urdu and Sindhi translations later.
+- Clear error and success states.
+
+---
+
+# PART D — ADMIN AND NETWORK OPERATIONS DASHBOARD
+
+## 16. Admin Dashboard
+
+Create a secure admin dashboard with role-based permissions.
+
+It should be suitable for managing VilloThar's customers, devices, subscriptions, payments, and network operations.
+
+### Dashboard overview
+
+Display relevant metrics:
+
+- Total registered customers.
+- Verified customers.
+- Pending identity verifications.
+- Total registered devices.
+- Active devices.
+- Active subscriptions.
+- Expired subscriptions.
+- Pending payments.
+- Successful payments.
+- Open support tickets.
+
+Do not populate production metrics with fabricated values. Use empty states or clearly labelled sample data in demo mode.
+
+## 17. Customer Management
+
+Administrators should be able to:
+
+- View customers.
+- Search customers by name, mobile number, or permitted identifiers.
+- View CNIC verification status.
+- Review pending verification cases.
+- View registered devices.
+- View subscription history.
+- Suspend or reactivate an account according to permissions.
+- Review account activity.
+
+Full CNIC information must be restricted to authorized roles and masked by default.
+
+## 18. Device Management
+
+Administrators should be able to:
+
+- View all registered devices.
+- Search by device name or MAC address.
+- View linked customer records.
+- View linked CNIC verification status.
+- View associated package.
+- View authorization status.
+- Suspend or reactivate devices.
+- Review MAC-address changes.
+- Review connection history.
+
+## 19. Package Management
+
+Administrators should be able to:
+
+- Create packages.
+- Edit package prices.
+- Edit validity periods.
+- Enable or disable packages.
+- View package purchases.
+- View package usage and expiry information.
+
+Use the initial four packages as the default configuration.
+
+## 20. Payment Management
+
+Include:
+
+- Payment history.
+- Transaction references.
+- Payment status.
+- Failed transactions.
+- Pending transactions.
+- Refund or review workflow where supported.
+- Payment reconciliation.
+
+Do not allow administrators to manually mark an unverified transaction as successful without an auditable, permission-controlled process.
+
+## 21. Network and NOC Management
+
+Create a network operations section.
+
+Include:
+
+- NOC overview.
+- Village network overview.
+- Router/access point inventory.
+- Network equipment status.
+- Connected devices.
+- Active network sessions.
+- Network authorization status.
+- Recent connection events.
+- Equipment maintenance records.
+
+Build the dashboard so it can eventually connect to compatible router/controller APIs, RADIUS, or other network-management systems.
+
+Do not fabricate live network metrics.
+
+If physical network integration is unavailable, show a clearly labelled demo or disconnected state.
+
+## 22. Village Management
+
+Administrators should be able to:
+
+- Add villages.
+- Edit village information.
+- Set village coverage status.
+- Associate equipment with villages.
+- View village-level customer and device counts.
+
+Possible village statuses:
+
+- Planned
+- Under Development
+- Pilot
+- Active
+- Temporarily Unavailable
+
+Set Pabohar as the initial pilot village.
+
+Keep Mithi identified as the NOC location.
+
+## 23. Support and Complaint Management
+
+Customers should be able to submit support requests for:
+
+- Login problems.
+- Payment problems.
+- Package expiry.
+- Device registration.
+- Internet connectivity.
+- Other issues.
+
+Administrators should be able to:
+
+- View tickets.
+- Assign tickets.
+- Update ticket status.
+- Add internal notes.
+- Respond to customers.
+- Track resolution history.
+
+---
+
+# PART E — TECHNICAL ARCHITECTURE
+
+## 24. Preferred Technology Stack
+
+Use the following stack unless the development environment requires a justified alternative.
+
+### Frontend
+
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+- Lucide React icons
+- React Router
+- TanStack Query or an equivalent data-fetching solution
+
+### Backend
+
+- Node.js
+- Express.js
+- TypeScript
+- REST API architecture
+- JWT-based authentication with secure session handling
+
+### Database
+
+- MongoDB
+- Mongoose
+
+### Deployment-ready architecture
+
+Structure the project so that:
+
+- Frontend can be deployed on Vercel or Netlify.
+- Backend can be deployed on Render or another suitable server.
+- Database can use MongoDB Atlas.
+- Secrets are managed through environment variables.
+
+Do not hardcode credentials, API keys, database URLs, JWT secrets, or payment-provider secrets.
+
+## 25. Suggested Project Structure
+
+Use a clean, modular structure.
+
+Frontend:
+
+- src/components
+- src/pages
+- src/layouts
+- src/hooks
+- src/services
+- src/context or src/store
+- src/types
+- src/utils
+- src/assets
+
+Backend:
+
+- server/src/config
+- server/src/controllers
+- server/src/services
+- server/src/models
+- server/src/routes
+- server/src/middleware
+- server/src/validators
+- server/src/integrations
+- server/src/utils
+
+Keep business logic separate from route handlers and UI components.
+
+## 26. Core Database Models
+
+Create appropriate database schemas for:
+
+### User / Customer
+
+- User ID
+- Full Name
+- CNIC Number (encrypted)
+- Mobile Number
+- Village
+- Password Hash
+- Identity Verification Status
+- Verification Timestamp
+- Verification Provider Reference
+- Consent Record
+- Account Status
+- Created At
+- Updated At
+
+### RegisteredDevice
+
+- Device ID
+- User ID
+- CNIC Reference or securely linked identity information
+- CNIC Verification Status
+- Device Name
+- Device Type
+- MAC Address
+- MAC Verification/Association Status
+- Registration Date
+- Active Subscription ID
+- Package Status
+- Network Authorization Status
+- Last Connection
+- Device Status
+
+### Package
+
+- Package ID
+- Package Name
+- Price
+- Speed
+- Validity
+- Active/Inactive Status
+
+### Subscription
+
+- Subscription ID
+- User ID
+- Device ID
+- Package ID
+- Payment ID
+- Start Date
+- Expiry Date
+- Subscription Status
+- Network Authorization Status
+
+### Payment
+
+- Payment ID
+- User ID
+- Device ID
+- Subscription ID
+- Amount
+- Payment Method
+- Transaction Reference
+- Payment Status
+- Payment Timestamp
+
+### NetworkSession
+
+- Session ID
+- User ID
+- Device ID
+- MAC Address
+- Router/Access Point ID
+- Village ID
+- Session Start
+- Session End
+- Session Status
+- Network Provider Reference
+
+### SupportTicket
+
+- Ticket ID
+- User ID
+- Category
+- Subject
+- Description
+- Status
+- Assigned Admin
+- Created At
+- Updated At
+
+### Village
+
+- Village ID
+- Village Name
+- Coverage Status
+- Associated Equipment
+- Location Information
+
+### AdminUser
+
+- Admin ID
+- Name
+- Email
+- Password Hash
+- Role
+- Permissions
+- Account Status
+
+### AuditLog
+
+- Log ID
+- Actor ID
+- Action
+- Resource Type
+- Resource ID
+- Timestamp
+- Relevant Metadata
+
+Use references and relationships appropriately. Avoid storing unnecessary copies of sensitive CNIC data in every device record. The device should securely link to the customer's protected identity record and expose only the information required for authorization and administration.
+
+---
+
+# PART F — NETWORK AUTHORIZATION AND INTEGRATIONS
+
+## 27. Network Authorization Logic
+
+The application must be designed to communicate with the actual network infrastructure.
+
+A backend service should evaluate whether a device is eligible for internet access.
+
+Before granting authorization, check:
+
+1. Customer account is eligible.
+2. Identity verification meets the configured policy.
+3. Device is registered.
+4. Device MAC address is associated and recognized by the trusted network integration.
+5. Device has its own valid subscription.
+6. Payment is verified.
+7. Subscription has not expired.
+8. Device and customer are not suspended.
+
+If the required checks pass, request authorization through the configured network integration.
+
+If a required check fails, do not grant internet access.
+
+### Network integration options
+
+Design integration points for compatible technologies such as:
+
+- Captive portal gateway.
+- Router/controller API.
+- RADIUS authentication and accounting.
+- Network session tracking.
+- Device authorization and deauthorization.
+
+Do not assume a specific router brand, model, API, or RADIUS configuration has already been selected.
+
+Keep these integrations modular so they can be configured after the actual network equipment is finalized.
+
+### Important technical requirement
+
+A frontend screen saying "Connected" does not mean the device has internet access.
+
+The system must distinguish between:
+
+- Registration completed.
+- Identity verified.
+- Payment confirmed.
+- Subscription active.
+- Network authorization requested.
+- Network authorization confirmed.
+- Internet session active.
+
+Only display the final connected state when the relevant backend and network systems confirm it.
+
+## 28. Integration Placeholders
+
+Create clean service interfaces for:
+
+- NADRA-authorized identity verification.
+- Payment gateway.
+- Router/controller API.
+- RADIUS server.
+- Captive portal gateway.
+- Network session accounting.
+
+Where credentials, agreements, APIs, or equipment are not yet available:
+
+- Implement the service interface.
+- Add a clearly labelled mock/sandbox implementation if needed.
+- Keep the configuration separate from business logic.
+- Document exactly what must be configured later.
+- Never claim that an external integration is operational when it is not.
+
+---
+
+# PART G — SECURITY, PRIVACY AND RELIABILITY
+
+## 29. Security Requirements
+
+Implement:
+
+- Secure password hashing.
+- Authentication middleware.
+- Role-based authorization.
+- Input validation.
+- Request validation.
+- Rate limiting for sensitive endpoints.
+- Secure error handling.
+- CORS configuration.
+- Secure HTTP headers.
+- Protection against common web vulnerabilities.
+- Environment-based secrets.
+- Audit logging for sensitive actions.
+- Secure token/session handling.
+
+For CNIC and identity information:
+
+- Encrypt sensitive data at rest.
+- Mask CNIC numbers in normal interfaces.
+- Restrict full access to authorized roles.
+- Do not include sensitive information in logs or error messages.
+- Maintain access history where appropriate.
+
+## 30. Reliability Requirements
+
+- Validate all important data on the backend.
+- Handle payment callbacks safely.
+- Prevent duplicate subscriptions and duplicate payment processing.
+- Handle expired subscriptions.
+- Handle network integration failures.
+- Handle identity-verification failures.
+- Provide useful error messages.
+- Preserve transaction and audit history.
+- Build loading, empty, success, and error states for all important screens.
+
+---
+
+# PART H — DESIGN AND USER EXPERIENCE
+
+## 31. Visual Identity
+
+The design should feel:
+
+- Modern.
+- Trustworthy.
+- Welcoming.
+- Community-focused.
+- Locally relevant.
+- Professional without being overly corporate.
+
+It should not look like a generic AI-generated SaaS dashboard.
+
+### Visual direction
+
+Use Tharparkar's identity as inspiration:
+
+- Warm desert-inspired tones.
+- Sand, earth, and natural colours.
+- Carefully selected accent colours.
+- Clean white or neutral backgrounds.
+- Subtle visual references to local culture, landscape, and architecture.
+
+Maintain strong contrast and readability.
+
+Use a consistent design system for:
+
+- Typography.
+- Buttons.
+- Cards.
+- Forms.
+- Tables.
+- Navigation.
+- Badges.
+- Alerts.
+- Modals.
+- Dashboard layouts.
+
+### Logo
+
+Use the official VilloThar logo if provided.
+
+- Do not alter its proportions.
+- Do not change its original colours.
+- Do not recreate it unnecessarily.
+- If the logo is unavailable, use a clearly labelled placeholder.
+
+### Images
+
+Use authentic, relevant visuals representing:
+
+- Tharparkar's landscape.
+- Local villages.
+- Community life.
+- Education and digital access.
+- Internet connectivity infrastructure.
+
+Avoid unrelated city imagery and generic corporate stock photographs.
+
+### Responsive design
+
+The platform must work well on:
+
+- Android phones.
+- iPhones.
+- Tablets.
+- Laptops.
+- Desktop screens.
+
+Prioritize mobile because many customers will access the service through smartphones.
+
+### Accessibility and performance
+
+- Use readable font sizes.
+- Use clear labels and accessible forms.
+- Support keyboard navigation.
+- Maintain sufficient colour contrast.
+- Optimize images.
+- Minimize unnecessary animations.
+- Keep the captive portal lightweight.
+- Avoid heavy assets that make the portal slow on limited connectivity.
+
+---
+
+# PART I — DEVELOPMENT AND DELIVERY REQUIREMENTS
+
+## 32. Functional Requirements
+
+Do not create buttons that do nothing.
+
+Every important action should have a working flow or a clearly labelled integration placeholder.
+
+Examples:
+
+- Register should validate and create a customer record.
+- Login should authenticate.
+- Device registration should create a device record.
+- Package selection should create a purchase flow.
+- Payment should create a transaction record.
+- Subscription activation should depend on verified payment.
+- Device authorization should depend on backend and network checks.
+- Renewal should create a new subscription or extend the existing one according to defined rules.
+- Admin actions should respect role permissions.
+
+Use realistic demo data only when necessary and label it clearly.
+
+## 33. Development Phases
+
+Build the application in these phases:
+
+### Phase 1 — Design and foundation
+
+- Establish the visual identity.
+- Create the responsive public website.
+- Create shared components and layouts.
+- Create the project structure.
+- Configure routing.
+
+### Phase 2 — Customer portal
+
+- Registration.
+- Login.
+- Customer dashboard.
+- CNIC verification status.
+- Device registration.
+- MAC association workflow.
+- Package selection.
+- Subscription management.
+
+### Phase 3 — Captive portal
+
+- Welcome screen.
+- Registration.
+- Identity verification states.
+- Device registration.
+- Package selection.
+- Payment.
+- Activation and expiry states.
+
+### Phase 4 — Admin dashboard
+
+- Customer management.
+- Device management.
+- Package management.
+- Payment management.
+- Subscription management.
+- Village management.
+- Network operations.
+- Support tickets.
+
+### Phase 5 — Backend and integrations
+
+- Database models.
+- REST APIs.
+- Authentication and authorization.
+- NADRA-authorized verification integration interface.
+- Payment integration interface.
+- Router/controller integration interface.
+- RADIUS integration interface.
+- Network session management.
+
+### Phase 6 — Testing and deployment preparation
+
+- Test all important user flows.
+- Test responsive layouts.
+- Test validation and error handling.
+- Test access permissions.
+- Test subscription expiry.
+- Test payment verification.
+- Test device authorization.
+- Document deployment and integration requirements.
+
+---
+
+# PART J — FINAL EXPECTATIONS
+
+## 34. What You Must Deliver
+
+Build a cohesive application containing:
+
+1. Official VilloThar public website.
+2. Customer registration and login.
+3. Customer dashboard.
+4. CNIC identity-verification workflow.
+5. Device registration and management.
+6. MAC-address association workflow.
+7. Package purchase and subscription management.
+8. Payment management.
+9. Captive portal experience.
+10. Admin dashboard.
+11. Network operations dashboard.
+12. Village and coverage management.
+13. Support and complaint system.
+14. Backend-ready architecture.
+15. Database schemas and API structure.
+16. Integration interfaces for NADRA-authorized verification, payment services, and network equipment.
+17. Clear setup and deployment documentation.
+
+## 35. Non-Negotiable Rules
+
+- Do not use the old package prices or speeds.
+- Do not invent additional package options.
+- Do not show Mithi as an active customer coverage village.
+- Do not show unconfirmed villages as covered.
+- Do not invent operational statistics.
+- Do not assume NADRA integration is already authorized or operational.
+- Do not fake successful identity verification.
+- Do not fake successful payment.
+- Do not fake live network connectivity.
+- Do not assume a browser can directly read a device's Wi-Fi MAC address.
+- Do not allow one package to serve multiple devices.
+- Do not create a family package for the initial launch.
+- Do not expose full CNIC information unnecessarily.
+- Do not hardcode API keys or credentials.
+- Do not create non-functional buttons or misleading success messages.
+
+## 36. How to Approach the Build
+
+First, understand the complete business model and user journeys.
+
+Then establish the design system and application architecture.
+
+Build the public website, customer portal, captive portal, and admin dashboard as connected parts of one product.
+
+Prioritize a polished and usable experience, but do not sacrifice technical accuracy.
+
+If a real-world integration cannot be completed because the required external API, authorization, credentials, or networking hardware is unavailable, build the correct integration interface and clearly document what remains to be connected.
+
+Before finishing, review the application from three perspectives:
+
+**Customer:** Can a person register, verify their identity, register a device, purchase its package, and understand whether internet access is active?
+
+**Administrator:** Can an authorized operator manage customers, devices, packages, payments, villages, support requests, and network operations?
+
+**Network system:** Can the backend determine whether a specific registered device with its associated MAC address is eligible for internet access, and communicate with the network infrastructure to authorize or suspend it?
+
+The final product should look and feel like a real internet service platform built for the people and communities of Tharparkar.
+
+**Build VilloThar as a complete, scalable, community-focused digital platform — not merely a promotional website.**
