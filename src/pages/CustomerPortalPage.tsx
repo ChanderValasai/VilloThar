@@ -21,6 +21,7 @@ import { StatusLabel } from '../components/StatusBadge';
 import { VilloTharLogo } from '../components/VilloTharLogo';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
+import { resolveSupportEmail, resolveWhatsAppSupport } from '../utils/contactLinks';
 import {
   DeviceType,
   PackagePlan,
@@ -1024,6 +1025,45 @@ export function CustomerPortalPage() {
 
         {/* TAB 5: SUPPORT TICKETS */}
         {tab === 'support' && (
+          <div className="space-y-6">
+            {(() => {
+              const wa = resolveWhatsAppSupport(data.contact?.supportPhone);
+              const email = resolveSupportEmail(data.contact?.supportEmail);
+              return (
+                <div className="bg-[#FFFFFF] border border-[#E2E0DA] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-1 text-sm">
+                    <p className="font-semibold text-[#132238]">Direct Customer Support</p>
+                    <p className="text-xs text-[#475569]">
+                      WhatsApp:{' '}
+                      <a
+                        href={wa.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono-data text-[#0B66A8] font-medium hover:underline"
+                      >
+                        {wa.display}
+                      </a>{' '}
+                      · Email:{' '}
+                      <a
+                        href={`mailto:${email}`}
+                        className="text-[#0B66A8] font-medium hover:underline"
+                      >
+                        {email}
+                      </a>
+                    </p>
+                  </div>
+                  <a
+                    href={wa.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#15803D] hover:bg-[#166534] rounded-lg whitespace-nowrap min-h-[40px]"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>Chat on WhatsApp</span>
+                  </a>
+                </div>
+              );
+            })()}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-5 bg-[#FFFFFF] border border-[#E2E0DA] rounded-xl p-6 space-y-4">
               <h2 className="font-display text-lg font-bold">New Support Request</h2>
@@ -1109,6 +1149,7 @@ export function CustomerPortalPage() {
                 </div>
               )}
             </div>
+          </div>
           </div>
         )}
 

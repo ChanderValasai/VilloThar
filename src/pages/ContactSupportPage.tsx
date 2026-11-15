@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { CheckCircle2, Mail, MapPin, Phone } from 'lucide-react';
+import { CheckCircle2, ExternalLink, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { PublicLayout } from '../components/PublicLayout';
 import { api } from '../services/api';
 import { TicketCategory } from '../types/domain';
+import { resolveSupportEmail, resolveWhatsAppSupport } from '../utils/contactLinks';
 
 export function ContactSupportPage() {
   const [contact, setContact] = useState<any>(null);
@@ -70,30 +71,62 @@ export function ContactSupportPage() {
               </p>
 
               <div className="space-y-3 pt-2 text-sm text-[#475569]">
-                <div className="flex items-start gap-3">
-                  <Phone className="w-4 h-4 text-[#0B66A8] mt-0.5 shrink-0" />
-                  <div>
-                    <p className="font-medium text-[#132238]">Phone / Helpline</p>
-                    <p>{contact?.supportPhone || 'http://wa.me/923212472380'}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Mail className="w-4 h-4 text-[#0B66A8] mt-0.5 shrink-0" />
-                  <div>
-                    <p className="font-medium text-[#132238]">Email Address</p>
-                    <p>{contact?.supportEmail || 'admin@villothar.com'}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-[#0B66A8] mt-0.5 shrink-0" />
-                  <div>
-                    <p className="font-medium text-[#132238]">Operations & Community Desk</p>
-                    <p>{contact?.officeAddress || 'Mithi NOC & Pabohar Desk, Tharparkar'}</p>
-                    <p className="text-xs text-[#64748B] mt-1">
-                      {contact?.supportHours || 'Support hours configurable in Admin'}
-                    </p>
-                  </div>
-                </div>
+                {(() => {
+                  const wa = resolveWhatsAppSupport(contact?.supportPhone);
+                  const email = resolveSupportEmail(contact?.supportEmail);
+                  return (
+                    <>
+                      <div className="flex items-start gap-3">
+                        <Phone className="w-4 h-4 text-[#0B66A8] mt-0.5 shrink-0" />
+                        <div>
+                          <p className="font-medium text-[#132238]">WhatsApp / Helpline</p>
+                          <a
+                            href={wa.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 font-mono-data text-[#0B66A8] hover:underline"
+                          >
+                            <span>{wa.display}</span>
+                            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                          </a>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Mail className="w-4 h-4 text-[#0B66A8] mt-0.5 shrink-0" />
+                        <div>
+                          <p className="font-medium text-[#132238]">Email Address</p>
+                          <a
+                            href={`mailto:${email}`}
+                            className="text-[#0B66A8] hover:underline break-all"
+                          >
+                            {email}
+                          </a>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <MapPin className="w-4 h-4 text-[#0B66A8] mt-0.5 shrink-0" />
+                        <div>
+                          <p className="font-medium text-[#132238]">Operations & Community Desk</p>
+                          <p>{contact?.officeAddress || 'Mithi NOC & Pabohar Desk, Tharparkar'}</p>
+                          <p className="text-xs text-[#64748B] mt-1">
+                            {contact?.supportHours || 'Support hours configurable in Admin'}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="pt-2">
+                        <a
+                          href={wa.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-[#15803D] hover:bg-[#166534] rounded-lg transition-colors min-h-[44px]"
+                        >
+                          <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                          <span>Chat on WhatsApp Support</span>
+                        </a>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
 

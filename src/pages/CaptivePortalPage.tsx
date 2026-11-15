@@ -18,6 +18,7 @@ import { VilloTharLogo } from '../components/VilloTharLogo';
 import { useAuth } from '../context/AuthContext';
 import { LocaleCode, useLanguage } from '../context/LanguageContext';
 import { api } from '../services/api';
+import { resolveSupportEmail, resolveWhatsAppSupport } from '../utils/contactLinks';
 import {
   DeviceType,
   PackagePlan,
@@ -574,6 +575,14 @@ export function CaptivePortalPage() {
                     >
                       Refresh / Re-check Verification
                     </button>
+                    <a
+                      href={resolveWhatsAppSupport(ctx?.contact?.supportPhone).href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full py-3 text-center rounded-xl bg-[#15803D] text-white text-sm font-semibold min-h-[48px]"
+                    >
+                      WhatsApp Customer Support
+                    </a>
                     <Link
                       to="/contact"
                       className="block w-full py-3 text-center rounded-xl border border-[#E2E0DA] text-sm font-semibold text-[#132238] min-h-[48px]"
@@ -874,6 +883,14 @@ export function CaptivePortalPage() {
                   >
                     Buy or Renew Package for This Device
                   </button>
+                  <a
+                    href={resolveWhatsAppSupport(ctx?.contact?.supportPhone).href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full py-3 text-center rounded-xl bg-[#15803D] text-white text-sm font-semibold min-h-[48px]"
+                  >
+                    WhatsApp Support ({resolveWhatsAppSupport(ctx?.contact?.supportPhone).display})
+                  </a>
                   <Link
                     to="/contact"
                     className="block w-full py-3 text-center rounded-xl border border-[#E2E0DA] text-sm font-semibold text-[#132238] min-h-[48px]"
@@ -901,9 +918,17 @@ export function CaptivePortalPage() {
                 >
                   Renew Package Now
                 </button>
+                <a
+                  href={resolveWhatsAppSupport(ctx?.contact?.supportPhone).href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-2.5 text-xs font-semibold text-[#15803D] hover:underline"
+                >
+                  WhatsApp Support ({resolveWhatsAppSupport(ctx?.contact?.supportPhone).display})
+                </a>
                 <Link
                   to="/contact"
-                  className="block w-full py-2.5 text-xs font-medium text-[#475569] hover:underline"
+                  className="block w-full py-1.5 text-xs font-medium text-[#475569] hover:underline"
                 >
                   Need help? Contact VilloThar Support
                 </Link>
@@ -915,7 +940,24 @@ export function CaptivePortalPage() {
 
       <footer className="py-4 px-4 text-center text-xs text-[#64748B] border-t border-[#E2E0DA] bg-[#FFFFFF]">
         <div className="max-w-xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <span>VilloThar Captive Portal</span>
+          <span>
+            VilloThar Support:{' '}
+            <a
+              href={resolveWhatsAppSupport(ctx?.contact?.supportPhone).href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#0B66A8] hover:underline"
+            >
+              WhatsApp
+            </a>{' '}
+            ·{' '}
+            <a
+              href={`mailto:${resolveSupportEmail(ctx?.contact?.supportEmail)}`}
+              className="text-[#0B66A8] hover:underline"
+            >
+              {resolveSupportEmail(ctx?.contact?.supportEmail)}
+            </a>
+          </span>
           <Link to="/" className="text-[#0B66A8] hover:underline">
             Return to Official Website
           </Link>

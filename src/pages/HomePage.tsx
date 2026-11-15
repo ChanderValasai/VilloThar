@@ -20,6 +20,7 @@ import { StatusLabel } from '../components/StatusBadge';
 import { useLanguage } from '../context/LanguageContext';
 import { api } from '../services/api';
 import { PackagePlan, Village } from '../types/domain';
+import { resolveSupportEmail, resolveWhatsAppSupport } from '../utils/contactLinks';
 
 const HOME_FAQS = [
   {
@@ -499,23 +500,52 @@ export function HomePage() {
             })}
           </div>
 
-          <div className="mt-12 p-6 sm:p-8 rounded-2xl border border-[#E2E0DA] bg-[#FAF9F6] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[#132238]">
-                <HelpCircle className="w-4 h-4 text-[#0B66A8]" aria-hidden="true" />
-                <span>Need assistance with registration, CNIC review, or device setup?</span>
+          {(() => {
+            const wa = resolveWhatsAppSupport(contact?.supportPhone);
+            const email = resolveSupportEmail(contact?.supportEmail);
+            return (
+              <div className="mt-12 p-6 sm:p-8 rounded-2xl border border-[#E2E0DA] bg-[#FAF9F6] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-[#132238]">
+                    <HelpCircle className="w-4 h-4 text-[#0B66A8]" aria-hidden="true" />
+                    <span>Need assistance with registration, CNIC review, or device setup?</span>
+                  </div>
+                  <p className="text-sm text-[#475569]">
+                    Message us on WhatsApp ({' '}
+                    <a
+                      href={wa.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#0B66A8] font-mono-data font-medium hover:underline"
+                    >
+                      {wa.display}
+                    </a>
+                    ) or email{' '}
+                    <a href={`mailto:${email}`} className="text-[#0B66A8] font-medium hover:underline">
+                      {email}
+                    </a>
+                    .
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-3 shrink-0">
+                  <a
+                    href={wa.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-[#15803D] hover:bg-[#166534] rounded-lg whitespace-nowrap min-h-[44px]"
+                  >
+                    WhatsApp Support
+                  </a>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-[#0B66A8] hover:bg-[#085186] rounded-lg whitespace-nowrap min-h-[44px]"
+                  >
+                    Contact Support
+                  </Link>
+                </div>
               </div>
-              <p className="text-sm text-[#475569]">
-                Reach our community helpdesk ({contact?.supportPhone || 'Placeholder contact editable in Admin'}).
-              </p>
-            </div>
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-[#0B66A8] hover:bg-[#085186] rounded-lg whitespace-nowrap min-h-[44px]"
-            >
-              Contact Support
-            </Link>
-          </div>
+            );
+          })()}
         </div>
       </section>
     </PublicLayout>

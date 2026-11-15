@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react';
 import { VilloTharLogo } from './VilloTharLogo';
 import { useAuth } from '../context/AuthContext';
 import { LocaleCode, useLanguage } from '../context/LanguageContext';
+import { resolveSupportEmail, resolveWhatsAppSupport } from '../utils/contactLinks';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -205,16 +206,37 @@ export function PublicLayout({ children, contact }: PublicLayoutProps) {
 
           <div>
             <h3 className="text-sm font-semibold text-[#132238] mb-3">Support & Network Hub</h3>
-            <ul className="space-y-2 text-sm">
-              <li>{contact?.officeAddress || 'Mithi NOC & Pabohar Community Desk, Tharparkar'}</li>
-              <li>Phone: {contact?.supportPhone || '[Placeholder — Editable in Admin]'}</li>
-              <li>Email: {contact?.supportEmail || '[Placeholder — Editable in Admin]'}</li>
-              <li>
-                <Link to="/contact" className="text-[#0B66A8] font-medium hover:underline">
-                  Submit Support Request
-                </Link>
-              </li>
-            </ul>
+            {(() => {
+              const wa = resolveWhatsAppSupport(contact?.supportPhone);
+              const email = resolveSupportEmail(contact?.supportEmail);
+              return (
+                <ul className="space-y-2 text-sm">
+                  <li>{contact?.officeAddress || 'Mithi NOC & Pabohar Community Desk, Tharparkar'}</li>
+                  <li>
+                    WhatsApp:{' '}
+                    <a
+                      href={wa.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#0B66A8] font-medium font-mono-data hover:underline"
+                    >
+                      {wa.display}
+                    </a>
+                  </li>
+                  <li>
+                    Email:{' '}
+                    <a href={`mailto:${email}`} className="text-[#0B66A8] font-medium hover:underline">
+                      {email}
+                    </a>
+                  </li>
+                  <li>
+                    <Link to="/contact" className="text-[#0B66A8] font-medium hover:underline">
+                      Submit Support Request
+                    </Link>
+                  </li>
+                </ul>
+              );
+            })()}
           </div>
         </div>
 

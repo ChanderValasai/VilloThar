@@ -75,6 +75,12 @@ customerRoutes.get('/dashboard', async (req: AuthenticatedRequest, res) => {
     packages,
     paymentMethods,
     coverageVillages,
+    contact: {
+      supportPhone: db.siteConfig.supportPhone,
+      supportEmail: db.siteConfig.supportEmail,
+      officeAddress: db.siteConfig.officeAddress,
+      supportHours: db.siteConfig.supportHours,
+    },
     integrations: {
       nadraMode: nadraProvider.mode,
       nadraPolicy: db.siteConfig.nadraPolicy,

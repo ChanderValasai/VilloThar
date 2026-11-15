@@ -222,11 +222,11 @@ function createInitialBaseline(): DatabaseSchema {
       },
     ],
     siteConfig: {
-      supportPhone: '[Placeholder — Set Verified Local Helpline in Admin]',
-      supportEmail: '[Placeholder — Set Official Support Email in Admin]',
+      supportPhone: 'https://wa.me/923212472380',
+      supportEmail: 'admin@villothar.com',
       officeAddress: 'VilloThar NOC Desk, Mithi & Pabohar Community Point, Tharparkar, Sindh',
-      supportHours: 'Saturday – Thursday · 09:00 AM – 06:00 PM (Placeholder)',
-      socialNote: 'Official social channels will be published after pilot confirmation.',
+      supportHours: 'Saturday – Thursday · 09:00 AM – 06:00 PM',
+      socialNote: 'Official WhatsApp support and email channels active.',
       nadraPolicy: 'require_verified',
       nadraIntegrationMode: 'sandbox',
       networkIntegrationMode: 'disconnected',
@@ -282,6 +282,18 @@ async function ensureLoaded(): Promise<DatabaseSchema> {
   try {
     const raw = await fs.readFile(DB_FILE, 'utf8');
     memoryCache = JSON.parse(raw) as DatabaseSchema;
+    let migrated = false;
+    if (memoryCache.siteConfig?.supportPhone?.includes('[Placeholder')) {
+      memoryCache.siteConfig.supportPhone = 'https://wa.me/923212472380';
+      migrated = true;
+    }
+    if (memoryCache.siteConfig?.supportEmail?.includes('[Placeholder')) {
+      memoryCache.siteConfig.supportEmail = 'admin@villothar.com';
+      migrated = true;
+    }
+    if (migrated) {
+      await persistDb(memoryCache);
+    }
   } catch {
     memoryCache = createInitialBaseline();
     await persistDb(memoryCache);
