@@ -20,7 +20,7 @@ function bundleLegacySourceImages(): Plugin {
       const imports: string[] = [];
       const transformed = code.replace(imagePattern, (_match, _quote: string, imagePath: string) => {
         const variable = `__villotharImage${imageIndex++}`;
-        imports.push(`import ${variable} from './assets/images/${imagePath}';`);
+        imports.push(`import ${variable} from '../assets/images/${imagePath}';`);
         return `{${variable}}`;
       });
 
