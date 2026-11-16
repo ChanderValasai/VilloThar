@@ -115,7 +115,7 @@ export function AboutPage() {
               <div className="bg-[#FFFFFF] border border-[#E2E0DA] rounded-xl p-6 flex items-start gap-4">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-[#F3F1EC] border border-[#E2E0DA] shrink-0">
                   <SafeImage
-                    src="/assets/aistudio/Chander_6c4c767c.png"
+                    src="/assets/aistudio/Chander_6c4c767c.jpg"
                     alt="Chander Valasai, Computer Science graduate supporting VilloThar technical work"
                     fallbackTitle="Chander Valasai"
                     className="w-full h-full object-cover object-top"
