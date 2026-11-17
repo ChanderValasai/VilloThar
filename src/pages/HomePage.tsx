@@ -19,9 +19,6 @@ import { SafeImage } from '../components/SafeImage';
 import { StatusLabel } from '../components/StatusBadge';
 import { useLanguage } from '../context/LanguageContext';
 import { BASELINE_CONTACT, BASELINE_PACKAGES, BASELINE_VILLAGES } from '../data/publicBaseline';
-import heroTharVillageImg from '../assets/images/hero_thar_village_1794661496483.jpg';
-import tharCommunityHubImg from '../assets/images/thar_community_hub_1794661497467.jpg';
-import tharDigitalEducationImg from '../assets/images/thar_digital_education_1794661498915.jpg';
 import { api } from '../services/api';
 import { PackagePlan, Village } from '../types/domain';
 import { resolveSupportEmail, resolveWhatsAppSupport } from '../utils/contactLinks';
@@ -117,22 +114,14 @@ export function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-6">
-              <div className="relative h-full min-h-[280px] sm:min-h-[360px] rounded-2xl overflow-hidden border border-[#E2E0DA] bg-[#F3F1EC]">
+            <div className="lg:col-span-6 flex items-center">
+              <div className="w-full rounded-2xl overflow-hidden border border-[#E2E0DA] bg-[#F3F1EC]">
                 <SafeImage
-                  src={heroTharVillageImg}
-                  alt="Rural village in Tharparkar with chaunra homes and a solar-powered community connectivity mast"
-                  fallbackTitle="Tharparkar Community Connectivity"
-                  className="w-full h-full lg:h-full object-cover"
+                  src="/assets/aistudio/Gemini_Generated_Image___1__fb3882ea.png"
+                  alt="VilloThar WISP network topology infographic showing Mithi NOC core node, relay hubs, and village distribution methods"
+                  fallbackTitle="VilloThar Network Topology"
+                  className="w-full h-auto object-contain block"
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent p-5 text-white">
-                  <p className="text-xs font-medium text-white/85">
-                    Pilot Village Network · Pabohar (~12 km from Mithi NOC)
-                  </p>
-                  <p className="text-sm font-semibold mt-0.5">
-                    Solar-supported village access points delivering 2 Mbps per registered device
-                  </p>
-                </div>
               </div>
             </div>
           </div>
@@ -424,9 +413,9 @@ export function HomePage() {
           <div className="lg:col-span-6">
             <div className="h-full min-h-[280px] rounded-2xl overflow-hidden border border-[#E2E0DA] bg-[#F3F1EC]">
               <SafeImage
-                src={tharCommunityHubImg}
-                alt="Solar-powered rural community network hub in Tharparkar"
-                fallbackTitle="Tharparkar Village Network Hub"
+                src="/assets/aistudio/abcb9179-4601-4257-894a-552131efa2f5_b158249f.webp"
+                alt="Aerial view of a solar-powered wireless tower serving a rural Tharparkar village"
+                fallbackTitle="Tharparkar Village Network Tower"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -440,8 +429,8 @@ export function HomePage() {
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="h-full min-h-[260px] rounded-2xl overflow-hidden border border-[#E2E0DA] bg-[#F3F1EC]">
               <SafeImage
-                src={tharDigitalEducationImg}
-                alt="Students and youth in rural Tharparkar learning together on digital devices"
+                src="/assets/aistudio/kidsInSchoolUsingGadgets_30d5a0f8.jfif"
+                alt="Students and teachers in rural Tharparkar using laptops and desktop computers outside a village school near a wireless tower"
                 fallbackTitle="Rural Digital Education in Tharparkar"
                 className="w-full h-full object-cover"
               />
