@@ -18,6 +18,10 @@ import { PublicLayout } from '../components/PublicLayout';
 import { SafeImage } from '../components/SafeImage';
 import { StatusLabel } from '../components/StatusBadge';
 import { useLanguage } from '../context/LanguageContext';
+import { BASELINE_CONTACT, BASELINE_PACKAGES, BASELINE_VILLAGES } from '../data/publicBaseline';
+import heroTharVillageImg from '../assets/images/hero_thar_village_1794661496483.jpg';
+import tharCommunityHubImg from '../assets/images/thar_community_hub_1794661497467.jpg';
+import tharDigitalEducationImg from '../assets/images/thar_digital_education_1794661498915.jpg';
 import { api } from '../services/api';
 import { PackagePlan, Village } from '../types/domain';
 import { resolveSupportEmail, resolveWhatsAppSupport } from '../utils/contactLinks';
@@ -43,19 +47,25 @@ const HOME_FAQS = [
 
 export function HomePage() {
   const { t } = useLanguage();
-  const [packages, setPackages] = useState<PackagePlan[]>([]);
-  const [villages, setVillages] = useState<Village[]>([]);
-  const [contact, setContact] = useState<any>(null);
+  const [packages, setPackages] = useState<PackagePlan[]>(BASELINE_PACKAGES);
+  const [villages, setVillages] = useState<Village[]>(BASELINE_VILLAGES);
+  const [contact, setContact] = useState<any>(BASELINE_CONTACT);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     api.public
       .getOverview()
       .then((data) => {
-        setPackages(data.packages || []);
-        setVillages(data.villages || []);
-        setContact(data.contact || null);
+        if (Array.isArray(data?.packages) && data.packages.length > 0) {
+          setPackages(data.packages);
+        }
+        if (Array.isArray(data?.villages) && data.villages.length > 0) {
+          setVillages(data.villages);
+        }
+        if (data?.contact) {
+          setContact(data.contact);
+        }
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -110,7 +120,7 @@ export function HomePage() {
             <div className="lg:col-span-6">
               <div className="relative h-full min-h-[280px] sm:min-h-[360px] rounded-2xl overflow-hidden border border-[#E2E0DA] bg-[#F3F1EC]">
                 <SafeImage
-                  src="/src/assets/images/hero_thar_village_1794661496483.jpg"
+                  src={heroTharVillageImg}
                   alt="Rural village in Tharparkar with chaunra homes and a solar-powered community connectivity mast"
                   fallbackTitle="Tharparkar Community Connectivity"
                   className="w-full h-full lg:h-full object-cover"
@@ -414,7 +424,7 @@ export function HomePage() {
           <div className="lg:col-span-6">
             <div className="h-full min-h-[280px] rounded-2xl overflow-hidden border border-[#E2E0DA] bg-[#F3F1EC]">
               <SafeImage
-                src="/src/assets/images/thar_community_hub_1794661497467.jpg"
+                src={tharCommunityHubImg}
                 alt="Solar-powered rural community network hub in Tharparkar"
                 fallbackTitle="Tharparkar Village Network Hub"
                 className="w-full h-full object-cover"
@@ -430,7 +440,7 @@ export function HomePage() {
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="h-full min-h-[260px] rounded-2xl overflow-hidden border border-[#E2E0DA] bg-[#F3F1EC]">
               <SafeImage
-                src="/src/assets/images/thar_digital_education_1794661498915.jpg"
+                src={tharDigitalEducationImg}
                 alt="Students and youth in rural Tharparkar learning together on digital devices"
                 fallbackTitle="Rural Digital Education in Tharparkar"
                 className="w-full h-full object-cover"

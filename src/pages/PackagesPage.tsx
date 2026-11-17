@@ -2,21 +2,27 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, Info } from 'lucide-react';
 import { PublicLayout } from '../components/PublicLayout';
+import { BASELINE_CONTACT, BASELINE_PACKAGES } from '../data/publicBaseline';
 import { api } from '../services/api';
 import { PackagePlan } from '../types/domain';
 
 export function PackagesPage() {
-  const [packages, setPackages] = useState<PackagePlan[]>([]);
-  const [contact, setContact] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [packages, setPackages] = useState<PackagePlan[]>(BASELINE_PACKAGES);
+  const [contact, setContact] = useState<any>(BASELINE_CONTACT);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     api.public
       .getOverview()
       .then((data) => {
-        setPackages(data.packages || []);
-        setContact(data.contact || null);
+        if (Array.isArray(data?.packages) && data.packages.length > 0) {
+          setPackages(data.packages);
+        }
+        if (data?.contact) {
+          setContact(data.contact);
+        }
       })
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 

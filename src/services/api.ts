@@ -37,7 +37,13 @@ async function request<T>(
   }
 
   const res = await fetch(url, { ...options, headers });
-  const data = await res.json().catch(() => ({}));
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error(`Unexpected response from server (${res.status})`);
+  }
+  const data = await res.json().catch(() => {
+    throw new Error(`Invalid JSON response (${res.status})`);
+  });
   if (!res.ok) {
     throw new Error(data.error || `Request failed (${res.status})`);
   }

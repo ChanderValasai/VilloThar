@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircle2, ExternalLink, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { PublicLayout } from '../components/PublicLayout';
+import { BASELINE_CONTACT } from '../data/publicBaseline';
 import { api } from '../services/api';
 import { TicketCategory } from '../types/domain';
 import { resolveSupportEmail, resolveWhatsAppSupport } from '../utils/contactLinks';
 
 export function ContactSupportPage() {
-  const [contact, setContact] = useState<any>(null);
+  const [contact, setContact] = useState<any>(BASELINE_CONTACT);
   const [contactName, setContactName] = useState('');
   const [contactMobile, setContactMobile] = useState('');
   const [category, setCategory] = useState<TicketCategory>('Internet Connectivity');
@@ -17,7 +18,12 @@ export function ContactSupportPage() {
   const [submittedTicketId, setSubmittedTicketId] = useState('');
 
   useEffect(() => {
-    api.public.getOverview().then((d) => setContact(d.contact));
+    api.public
+      .getOverview()
+      .then((d) => {
+        if (d?.contact) setContact(d.contact);
+      })
+      .catch(() => {});
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {

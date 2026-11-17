@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { AlertCircle, CheckCircle2, Info, Shield } from 'lucide-react';
 import { PublicLayout } from '../components/PublicLayout';
 import { useAuth } from '../context/AuthContext';
+import { BASELINE_VILLAGES } from '../data/publicBaseline';
 import { api } from '../services/api';
 import { Village } from '../types/domain';
 
@@ -125,12 +126,13 @@ export function CustomerRegisterPage() {
   const packageHint = searchParams.get('package');
   const { setCustomerAuth } = useAuth();
 
-  const [villages, setVillages] = useState<Village[]>([]);
+  const initialCoverageVillages = BASELINE_VILLAGES.filter((v) => v.role === 'Coverage');
+  const [villages, setVillages] = useState<Village[]>(initialCoverageVillages);
   const [nadraMode, setNadraMode] = useState<'authorized' | 'sandbox'>('sandbox');
   const [fullName, setFullName] = useState('');
   const [cnicNumber, setCnicNumber] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [villageId, setVillageId] = useState('');
+  const [villageId, setVillageId] = useState(initialCoverageVillages[0]?.id || '');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [consentAccepted, setConsentAccepted] = useState(false);
@@ -138,12 +140,17 @@ export function CustomerRegisterPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    api.public.getOverview().then((data) => {
-      const cov = (data.villages || []).filter((v: Village) => v.role === 'Coverage');
-      setVillages(cov);
-      if (cov.length > 0) setVillageId(cov[0].id);
-      if (data.integrations?.nadraMode) setNadraMode(data.integrations.nadraMode);
-    });
+    api.public
+      .getOverview()
+      .then((data) => {
+        const cov = (data.villages || []).filter((v: Village) => v.role === 'Coverage');
+        if (cov.length > 0) {
+          setVillages(cov);
+          setVillageId(cov[0].id);
+        }
+        if (data.integrations?.nadraMode) setNadraMode(data.integrations.nadraMode);
+      })
+      .catch(() => {});
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {

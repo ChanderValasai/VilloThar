@@ -283,6 +283,15 @@ async function ensureLoaded(): Promise<DatabaseSchema> {
     const raw = await fs.readFile(DB_FILE, 'utf8');
     memoryCache = JSON.parse(raw) as DatabaseSchema;
     let migrated = false;
+    const baseline = createInitialBaseline();
+    if (!Array.isArray(memoryCache.packages) || memoryCache.packages.length === 0) {
+      memoryCache.packages = baseline.packages;
+      migrated = true;
+    }
+    if (!Array.isArray(memoryCache.villages) || memoryCache.villages.length === 0) {
+      memoryCache.villages = baseline.villages;
+      migrated = true;
+    }
     if (memoryCache.siteConfig?.supportPhone?.includes('[Placeholder')) {
       memoryCache.siteConfig.supportPhone = 'https://wa.me/923212472380';
       migrated = true;

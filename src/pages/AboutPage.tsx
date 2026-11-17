@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom';
 import { Building2, ExternalLink, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { PublicLayout } from '../components/PublicLayout';
 import { SafeImage } from '../components/SafeImage';
+import { BASELINE_CONTACT } from '../data/publicBaseline';
+import heroTharVillageImg from '../assets/images/hero_thar_village_1794661496483.jpg';
 import { api } from '../services/api';
 
 export function AboutPage() {
-  const [contact, setContact] = useState<any>(null);
+  const [contact, setContact] = useState<any>(BASELINE_CONTACT);
 
   useEffect(() => {
     api.public
       .getOverview()
-      .then((d) => setContact(d.contact || null))
+      .then((d) => {
+        if (d?.contact) setContact(d.contact);
+      })
       .catch(() => {});
   }, []);
 
@@ -33,7 +37,7 @@ export function AboutPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-12">
           <div className="rounded-2xl overflow-hidden border border-[#E2E0DA] bg-[#F3F1EC] aspect-[16/9]">
             <SafeImage
-              src="/src/assets/images/hero_thar_village_1794661496483.jpg"
+              src={heroTharVillageImg}
               alt="Tharparkar village landscape with traditional chaunra dwellings"
               fallbackTitle="Tharparkar Community Initiative"
               className="w-full h-full object-cover"

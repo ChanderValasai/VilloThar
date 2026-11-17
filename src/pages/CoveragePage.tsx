@@ -2,18 +2,26 @@ import { useEffect, useState } from 'react';
 import { MapPin, Radio, Server } from 'lucide-react';
 import { PublicLayout } from '../components/PublicLayout';
 import { StatusLabel } from '../components/StatusBadge';
+import { BASELINE_CONTACT, BASELINE_VILLAGES } from '../data/publicBaseline';
 import { api } from '../services/api';
 import { Village } from '../types/domain';
 
 export function CoveragePage() {
-  const [villages, setVillages] = useState<Village[]>([]);
-  const [contact, setContact] = useState<any>(null);
+  const [villages, setVillages] = useState<Village[]>(BASELINE_VILLAGES);
+  const [contact, setContact] = useState<any>(BASELINE_CONTACT);
 
   useEffect(() => {
-    api.public.getOverview().then((data) => {
-      setVillages(data.villages || []);
-      setContact(data.contact || null);
-    });
+    api.public
+      .getOverview()
+      .then((data) => {
+        if (Array.isArray(data?.villages) && data.villages.length > 0) {
+          setVillages(data.villages);
+        }
+        if (data?.contact) {
+          setContact(data.contact);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const nocLocations = villages.filter((v) => v.role === 'NOC');
